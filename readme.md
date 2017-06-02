@@ -15,14 +15,14 @@ You can inlude your own glyph if you do not want to use the default plus and min
 Installation
 ------------
 ```sh
-npm install react-bootstrap-counter --save
+npm install react-bootstrap-personalized-counter --save
 ````
 Usage
 ---
 ````javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CounterInput from 'react-bootstrap-counter';
+import CounterInput from 'react-bootstrap-personalized-counter';
 ReactDOM.render(<CounterInput value={2} min={1} max={50} glyphPlus={{glyph:'fa fa-plus', position:'left'}} glyphMinus={{glyph:'fa fa-minus', position:'right'}} onChange={ (value) => { console.log(value) } } />, document.getElementById('page'));
 ````
 Props
