@@ -4,11 +4,13 @@ export default class CounterInput extends React.Component {
 
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			value: (this.props.value < this.props.min) ? this.props.min : (this.props.value || 0),
 			min: this.props.min || 0,
-			max: this.props.max || -1
+			max: this.props.max || -1,
+			glyphPlus: this.props.glyphPlus || {glyph: "fa fa-plus", position: this.props.glyphMinus !== undefined && this.props.glyphMinus === "right" ? "left" : "right"},
+			glyphMinus: this.props.glyphMinus || {glyph: "fa fa-minus", position: this.props.glyphPlus !== undefined && this.props.glyphPlus === "left" ? "right" : "left"}
 		}
 
 	}
@@ -81,13 +83,23 @@ export default class CounterInput extends React.Component {
 
 		return (
 			<div className="input-group counter-input">
-				<span className="input-group-addon" onClick={() => {this._increase(value)}}>
-					<i className="fa fa-plus" />
-				</span>
+				{ this.state.glyphPlus.position === "left" ?
+					<span className="input-group-addon" onClick={() => {this._increase(value)}}>
+						<i className={this.state.glyphPlus.glyph} />
+					</span> :
+					<span className="input-group-addon" onClick={() => {this._decrease(value)}}>
+						<i className={this.state.glyphMinus.glyph}/>
+					</span>
+				}
 				<input className="form-control" type="text" onChange={this._onChange} value={value} />
-				<span className="input-group-addon" onClick={() => {this._decrease(value)}}>
-					<i className="fa fa-minus"/>
-				</span>
+				{ this.state.glyphPlus.position === "right" ?
+					<span className="input-group-addon" onClick={() => {this._increase(value)}}>
+						<i className={this.state.glyphPlus.glyph} />
+					</span> :
+					<span className="input-group-addon" onClick={() => {this._decrease(value)}}>
+						<i className={this.state.glyphMinus.glyph}/>
+					</span>
+				}
 			</div>
 		)
 	}

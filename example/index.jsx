@@ -7,7 +7,7 @@ class App extends React.Component {
 		return (
 			<div className="jumbotron">
 				<div className="col-lg-2">
-					<CounterInput value={1} min={10} onChange={(value) => {console.log(value)}} />
+					<CounterInput value={1} min={10} glyphMinus={{glyph:'fa fa-flag', position:'left'}} onChange={(value) => {console.log(value)}} />
 				</div>
 			</div>
 		)
