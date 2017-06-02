@@ -4,16 +4,16 @@
   "description": "A counter input component for react using bootstrap",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/.bin/babel src/react-bootstrap-counter.jsx -o index.js",
-    "dev": "./node_modules/.bin/babel src/react-bootstrap-counter.jsx  -o example/react-bootstrap-counter.js",
+    "build": "./node_modules/.bin/babel src/react-bootstrap-personalized-counter.jsx -o index.js",
+    "dev": "./node_modules/.bin/babel src/react-bootstrap-personalized-counter.jsx  -o example/react-bootstrap-personalized-counter.js",
     "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/manojsinghnegiwd/react-bootstrap-counter"
+    "url": "https://github.com/ayyouboulidi/react-bootstrap-counter"
   },
   "bugs": {
-    "url": "https://github.com/manojsinghnegiwd/react-bootstrap-counter/issues"
+    "url": "https://github.com/ayyouboulidi/react-bootstrap-counter/issues"
   },
   "keywords": [
     "react-bootstrap-counter",
