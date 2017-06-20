@@ -10,7 +10,8 @@ export default class CounterInput extends React.Component {
 			min: this.props.min || 0,
 			max: this.props.max || -1,
 			glyphPlus: this.props.glyphPlus || {glyph: "fa fa-plus", position: this.props.glyphMinus !== undefined && this.props.glyphMinus === "right" ? "left" : "right"},
-			glyphMinus: this.props.glyphMinus || {glyph: "fa fa-minus", position: this.props.glyphPlus !== undefined && this.props.glyphPlus === "left" ? "right" : "left"}
+			glyphMinus: this.props.glyphMinus || {glyph: "fa fa-minus", position: this.props.glyphPlus !== undefined && this.props.glyphPlus === "left" ? "right" : "left"},
+			styles: this.props.styles || {cursor: 'pointer'}
 		}
 
 	}
@@ -80,23 +81,24 @@ export default class CounterInput extends React.Component {
 	render () {
 
 		const { value } = this.state;
+		const styles = this.state.styles;
 
 		return (
-			<div className="input-group counter-input">
+			<div className="input-group counter-input d-flex justify-content-between w-100">
 				{ this.state.glyphPlus.position === "left" ?
-					<span className="input-group-addon" onClick={() => {this._increase(value)}}>
+					<span className="input-group-addon w-100" style={styles} onClick={() => {this._increase(value)}}>
 						<i className={this.state.glyphPlus.glyph} />
 					</span> :
-					<span className="input-group-addon" onClick={() => {this._decrease(value)}}>
+					<span className="input-group-addon w-100" style={styles} onClick={() => {this._decrease(value)}}>
 						<i className={this.state.glyphMinus.glyph}/>
 					</span>
 				}
-				<input className="form-control" type="text" onChange={this._onChange} value={value} />
+				<input className="form-control text-center w-100" type="text" onChange={this._onChange} value={value} />
 				{ this.state.glyphPlus.position === "right" ?
-					<span className="input-group-addon" onClick={() => {this._increase(value)}}>
+					<span className="input-group-addon w-100" style={styles} onClick={() => {this._increase(value)}}>
 						<i className={this.state.glyphPlus.glyph} />
 					</span> :
-					<span className="input-group-addon" onClick={() => {this._decrease(value)}}>
+					<span className="input-group-addon w-100" style={styles} onClick={() => {this._decrease(value)}}>
 						<i className={this.state.glyphMinus.glyph}/>
 					</span>
 				}

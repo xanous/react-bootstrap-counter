@@ -1,6 +1,6 @@
 import React from 'react';
 import ReacDOM from 'react-dom';
-import CounterInput from './react-bootstrap-counter';
+import CounterInput from './react-bootstrap-personalized-counter';
 
 class App extends React.Component {
 	render() {

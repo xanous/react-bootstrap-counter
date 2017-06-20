@@ -101,7 +101,8 @@ var CounterInput = function (_React$Component) {
 			min: _this.props.min || 0,
 			max: _this.props.max || -1,
 			glyphPlus: _this.props.glyphPlus || { glyph: "fa fa-plus", position: _this.props.glyphMinus !== undefined && _this.props.glyphMinus === "right" ? "left" : "right" },
-			glyphMinus: _this.props.glyphMinus || { glyph: "fa fa-minus", position: _this.props.glyphPlus !== undefined && _this.props.glyphPlus === "left" ? "right" : "left" }
+			glyphMinus: _this.props.glyphMinus || { glyph: "fa fa-minus", position: _this.props.glyphPlus !== undefined && _this.props.glyphPlus === "left" ? "right" : "left" },
+			styles: _this.props.styles || { cursor: 'pointer' }
 		};
 
 		return _this;
@@ -114,33 +115,34 @@ var CounterInput = function (_React$Component) {
 
 			var value = this.state.value;
 
+			var styles = this.state.styles;
 
 			return _react2.default.createElement(
 				"div",
-				{ className: "input-group counter-input" },
+				{ className: "input-group counter-input d-flex justify-content-between w-100" },
 				this.state.glyphPlus.position === "left" ? _react2.default.createElement(
 					"span",
-					{ className: "input-group-addon", onClick: function onClick() {
+					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
 							_this2._increase(value);
 						} },
 					_react2.default.createElement("i", { className: this.state.glyphPlus.glyph })
 				) : _react2.default.createElement(
 					"span",
-					{ className: "input-group-addon", onClick: function onClick() {
+					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
 							_this2._decrease(value);
 						} },
 					_react2.default.createElement("i", { className: this.state.glyphMinus.glyph })
 				),
-				_react2.default.createElement("input", { className: "form-control", type: "text", onChange: this._onChange, value: value }),
+				_react2.default.createElement("input", { className: "form-control text-center w-100", type: "text", onChange: this._onChange, value: value }),
 				this.state.glyphPlus.position === "right" ? _react2.default.createElement(
 					"span",
-					{ className: "input-group-addon", onClick: function onClick() {
+					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
 							_this2._increase(value);
 						} },
 					_react2.default.createElement("i", { className: this.state.glyphPlus.glyph })
 				) : _react2.default.createElement(
 					"span",
-					{ className: "input-group-addon", onClick: function onClick() {
+					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
 							_this2._decrease(value);
 						} },
 					_react2.default.createElement("i", { className: this.state.glyphMinus.glyph })
