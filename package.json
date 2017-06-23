@@ -25,6 +25,7 @@
   "author": "ayyoub oulidi",
   "license": "MIT",
   "dependencies": {
+    "prop-types": "^15.5.10",
     "react": "^15.3.2"
   },
   "devDependencies": {
