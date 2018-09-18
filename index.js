@@ -41,8 +41,8 @@ var CounterInput = function (_React$Component) {
 			value: value < min ? min : value > max ? max : value,
 			min: min || 0,
 			max: max || -1,
-			glyphPlus: _this.props.glyphPlus || { glyph: "fa fa-plus", position: _this.props.glyphMinus !== undefined && _this.props.glyphMinus === "right" ? "left" : "right" },
-			glyphMinus: _this.props.glyphMinus || { glyph: "fa fa-minus", position: _this.props.glyphPlus !== undefined && _this.props.glyphPlus === "left" ? "right" : "left" },
+			plus: _this.props.plus || { type: 'glyph', value: 'fa fa-plus' },
+			minus: _this.props.minus || { type: 'glyph', value: 'fa fa-minus' },
 			styles: _this.props.styles || { cursor: 'pointer' }
 		};
 		return _this;
@@ -64,40 +64,28 @@ var CounterInput = function (_React$Component) {
 
 			var _state = this.state,
 			    value = _state.value,
-			    glyphPlus = _state.glyphPlus,
-			    glyphMinus = _state.glyphMinus;
+			    plus = _state.plus,
+			    minus = _state.minus,
+			    styles = _state.styles;
 
-			var styles = this.state.styles;
 
 			return _react2.default.createElement(
 				'div',
 				{ className: 'input-group counter-input d-flex justify-content-between w-100' },
-				glyphPlus.position === "left" ? _react2.default.createElement(
-					'span',
-					{ className: 'input-group-addon w-100', style: styles, onClick: function onClick() {
-							_this2._increase(value);
-						} },
-					_react2.default.createElement('i', { className: glyphPlus.glyph })
-				) : _react2.default.createElement(
+				_react2.default.createElement(
 					'span',
 					{ className: 'input-group-addon w-100', style: styles, onClick: function onClick() {
 							_this2._decrease(value);
 						} },
-					_react2.default.createElement('i', { className: glyphMinus.glyph })
+					this.iconRender(minus)
 				),
 				_react2.default.createElement('input', { className: 'form-control text-center w-100', type: 'text', onChange: this._onChange, value: value }),
-				glyphPlus.position === "right" ? _react2.default.createElement(
+				_react2.default.createElement(
 					'span',
 					{ className: 'input-group-addon w-100', style: styles, onClick: function onClick() {
 							_this2._increase(value);
 						} },
-					_react2.default.createElement('i', { className: glyphPlus.glyph })
-				) : _react2.default.createElement(
-					'span',
-					{ className: 'input-group-addon w-100', style: styles, onClick: function onClick() {
-							_this2._decrease(value);
-						} },
-					_react2.default.createElement('i', { className: glyphMinus.glyph })
+					this.iconRender(plus)
 				)
 			);
 		}
@@ -110,8 +98,8 @@ CounterInput.Proptypes = {
 	value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired,
 	min: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired,
 	max: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired,
-	glyphPlus: _propTypes2.default.object,
-	glyphMinus: _propTypes2.default.object,
+	plus: _propTypes2.default.object,
+	minus: _propTypes2.default.object,
 	styles: _propTypes2.default.object
 };
 
@@ -130,8 +118,7 @@ var _initialiseProps = function _initialiseProps() {
 
 		// check for empty string or invalid values
 		if (new_value === '') {
-			_this3.set(_this3.state.min // fallback to min value
-			);
+			_this3.set(_this3.state.min); // fallback to min value
 		} else if (new_value > _this3.state.max && _this3.state.max !== -1 || new_value < _this3.state.min) {
 			return; // don't update the value
 		} else if (typeof new_value != 'number') {
@@ -139,8 +126,7 @@ var _initialiseProps = function _initialiseProps() {
 
 			// if parsed is not a number
 			if (isNaN(parsed)) {
-				_this3.set(_this3.state.min // fallback to min value
-				);
+				_this3.set(_this3.state.min); // fallback to min value
 			} else {
 				// if parsed succesfully update the value
 				_this3.set(parsed);
@@ -150,19 +136,16 @@ var _initialiseProps = function _initialiseProps() {
 
 	this._increase = function (value) {
 		if (value === '') {
-			_this3.set(_this3.state.min // fallback to min value
-			);
+			_this3.set(_this3.state.min); // fallback to min value
 		} else {
 			var parsed = parseInt(value, 10);
 
 			// if parsed is not a number
 			if (isNaN(parsed)) {
-				_this3.set(_this3.state.min // fallback to min value
-				);
+				_this3.set(_this3.state.min); // fallback to min value
 			} else {
 				if (value < _this3.state.max || _this3.state.max === -1) {
-					_this3.set(parsed + 1 // increment value
-					);
+					_this3.set(parsed + 1); // increment value
 				}
 			}
 		}
@@ -170,21 +153,27 @@ var _initialiseProps = function _initialiseProps() {
 
 	this._decrease = function (value) {
 		if (value === '') {
-			_this3.set(_this3.state.min // fallback to min value
-			);
+			_this3.set(_this3.state.min); // fallback to min value
 		} else {
 			var parsed = parseInt(value, 10);
 
 			// if parsed is not a number
 			if (isNaN(parsed)) {
-				_this3.set(_this3.state.min // fallback to min value
-				);
+				_this3.set(_this3.state.min); // fallback to min value
 			} else {
 				if (value > _this3.state.min) {
-					_this3.set(parsed - 1 // increment value
-					);
+					_this3.set(parsed - 1); // increment value
 				}
 			}
+		}
+	};
+
+	this.iconRender = function (element) {
+		switch (element.type) {
+			case 'img':
+				return _react2.default.createElement('img', { style: element.styles, src: element.value, alt: 'icon' });
+			default:
+				return _react2.default.createElement('i', { className: element.value });
 		}
 	};
 };

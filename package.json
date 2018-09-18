@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-personalized-counter",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "A counter input component for react using bootstrap",
   "main": "index.js",
   "scripts": {
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ayyouboulidi/react-bootstrap-counter"
+    "url": "https://github.com/xanous/react-bootstrap-counter"
   },
   "bugs": {
-    "url": "https://github.com/ayyouboulidi/react-bootstrap-counter/issues"
+    "url": "https://github.com/xanous/react-bootstrap-counter/issues"
   },
   "keywords": [
     "react-bootstrap-counter",
@@ -22,7 +22,7 @@
     "boostrap component",
     "react counter"
   ],
-  "author": "ayyoub oulidi",
+  "author": "anass aoun",
   "license": "MIT",
   "dependencies": {
     "prop-types": "^15.5.10",

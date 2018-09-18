@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
 	value: true
@@ -6,9 +6,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,126 +30,62 @@ var CounterInput = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (CounterInput.__proto__ || Object.getPrototypeOf(CounterInput)).call(this, props));
 
-		_this.set = function (value) {
-			_this.setState({
-				value: value
-			});
-			_this.props.onChange(value);
-		};
+		_initialiseProps.call(_this);
 
-		_this._onChange = function (e) {
-			var new_value = e.target.value;
-
-			// check for empty string or invalid values
-			if (new_value === '') {
-				_this.set(_this.state.min // fallback to min value
-				);
-			} else if (new_value > _this.state.max && _this.state.max !== -1 || new_value < _this.state.min) {
-				return; // don't update the value
-			} else if (typeof new_value != 'number') {
-				var parsed = parseInt(new_value, 10); // try to parse the number
-
-				// if parsed is not a number
-				if (isNaN(parsed)) {
-					_this.set(_this.state.min // fallback to min value
-					);
-				} else {
-					// if parsed succesfully update the value
-					_this.set(parsed);
-				}
-			}
-		};
-
-		_this._increase = function (value) {
-			if (value === '') {
-				_this.set(_this.state.min // fallback to min value
-				);
-			} else {
-				var parsed = parseInt(value, 10);
-
-				// if parsed is not a number
-				if (isNaN(parsed)) {
-					_this.set(_this.state.min // fallback to min value
-					);
-				} else {
-					if (value < _this.state.max || _this.state.max == -1) {
-						_this.set(parsed + 1 // increment value
-						);
-					}
-				}
-			}
-		};
-
-		_this._decrease = function (value) {
-			if (value === '') {
-				_this.set(_this.state.min // fallback to min value
-				);
-			} else {
-				var parsed = parseInt(value, 10);
-
-				// if parsed is not a number
-				if (isNaN(parsed)) {
-					_this.set(_this.state.min // fallback to min value
-					);
-				} else {
-					if (value > _this.state.min) {
-						_this.set(parsed - 1 // increment value
-						);
-					}
-				}
-			}
-		};
+		var _this$parseProps = _this.parseProps(),
+		    value = _this$parseProps.value,
+		    min = _this$parseProps.min,
+		    max = _this$parseProps.max;
 
 		_this.state = {
-			value: _this.props.value < _this.props.min ? _this.props.min : _this.props.value || 0,
-			min: _this.props.min || 0,
-			max: _this.props.max || -1,
-			glyphPlus: _this.props.glyphPlus || { glyph: "fa fa-plus", position: _this.props.glyphMinus !== undefined && _this.props.glyphMinus === "right" ? "left" : "right" },
-			glyphMinus: _this.props.glyphMinus || { glyph: "fa fa-minus", position: _this.props.glyphPlus !== undefined && _this.props.glyphPlus === "left" ? "right" : "left" },
+			value: value < min ? min : value > max ? max : value,
+			min: min || 0,
+			max: max || -1,
+			plus: _this.props.plus || { type: 'glyph', value: 'fa fa-plus' },
+			minus: _this.props.minus || { type: 'glyph', value: 'fa fa-minus' },
 			styles: _this.props.styles || { cursor: 'pointer' }
 		};
-
 		return _this;
 	}
 
 	_createClass(CounterInput, [{
-		key: "render",
+		key: 'parseProps',
+		value: function parseProps() {
+			return {
+				value: parseInt(this.props.value, 10),
+				min: parseInt(this.props.min, 10),
+				max: parseInt(this.props.max, 10)
+			};
+		}
+	}, {
+		key: 'render',
 		value: function render() {
 			var _this2 = this;
 
-			var value = this.state.value;
+			var _state = this.state,
+			    value = _state.value,
+			    plus = _state.plus,
+			    minus = _state.minus,
+			    styles = _state.styles;
 
-			var styles = this.state.styles;
 
 			return _react2.default.createElement(
-				"div",
-				{ className: "input-group counter-input d-flex justify-content-between w-100" },
-				this.state.glyphPlus.position === "left" ? _react2.default.createElement(
-					"span",
-					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
-							_this2._increase(value);
-						} },
-					_react2.default.createElement("i", { className: this.state.glyphPlus.glyph })
-				) : _react2.default.createElement(
-					"span",
-					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
+				'div',
+				{ className: 'input-group counter-input d-flex justify-content-between w-100' },
+				_react2.default.createElement(
+					'span',
+					{ className: 'input-group-addon w-100', style: styles, onClick: function onClick() {
 							_this2._decrease(value);
 						} },
-					_react2.default.createElement("i", { className: this.state.glyphMinus.glyph })
+					this.iconRender(minus)
 				),
-				_react2.default.createElement("input", { className: "form-control text-center w-100", type: "text", onChange: this._onChange, value: value }),
-				this.state.glyphPlus.position === "right" ? _react2.default.createElement(
-					"span",
-					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
+				_react2.default.createElement('input', { className: 'form-control text-center w-100', type: 'text', onChange: this._onChange, value: value }),
+				_react2.default.createElement(
+					'span',
+					{ className: 'input-group-addon w-100', style: styles, onClick: function onClick() {
 							_this2._increase(value);
 						} },
-					_react2.default.createElement("i", { className: this.state.glyphPlus.glyph })
-				) : _react2.default.createElement(
-					"span",
-					{ className: "input-group-addon w-100", style: styles, onClick: function onClick() {
-							_this2._decrease(value);
-						} },
-					_react2.default.createElement("i", { className: this.state.glyphMinus.glyph })
+					this.iconRender(plus)
 				)
 			);
 		}
@@ -153,5 +93,89 @@ var CounterInput = function (_React$Component) {
 
 	return CounterInput;
 }(_react2.default.Component);
+
+CounterInput.Proptypes = {
+	value: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired,
+	min: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired,
+	max: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.number]).isRequired,
+	plus: _propTypes2.default.object,
+	minus: _propTypes2.default.object,
+	styles: _propTypes2.default.object
+};
+
+var _initialiseProps = function _initialiseProps() {
+	var _this3 = this;
+
+	this.set = function (value) {
+		_this3.setState({
+			value: value
+		});
+		_this3.props.onChange(value);
+	};
+
+	this._onChange = function (e) {
+		var new_value = e.target.value;
+
+		// check for empty string or invalid values
+		if (new_value === '') {
+			_this3.set(_this3.state.min); // fallback to min value
+		} else if (new_value > _this3.state.max && _this3.state.max !== -1 || new_value < _this3.state.min) {
+			return; // don't update the value
+		} else if (typeof new_value != 'number') {
+			var parsed = parseInt(new_value, 10); // try to parse the number
+
+			// if parsed is not a number
+			if (isNaN(parsed)) {
+				_this3.set(_this3.state.min); // fallback to min value
+			} else {
+				// if parsed succesfully update the value
+				_this3.set(parsed);
+			}
+		}
+	};
+
+	this._increase = function (value) {
+		if (value === '') {
+			_this3.set(_this3.state.min); // fallback to min value
+		} else {
+			var parsed = parseInt(value, 10);
+
+			// if parsed is not a number
+			if (isNaN(parsed)) {
+				_this3.set(_this3.state.min); // fallback to min value
+			} else {
+				if (value < _this3.state.max || _this3.state.max === -1) {
+					_this3.set(parsed + 1); // increment value
+				}
+			}
+		}
+	};
+
+	this._decrease = function (value) {
+		if (value === '') {
+			_this3.set(_this3.state.min); // fallback to min value
+		} else {
+			var parsed = parseInt(value, 10);
+
+			// if parsed is not a number
+			if (isNaN(parsed)) {
+				_this3.set(_this3.state.min); // fallback to min value
+			} else {
+				if (value > _this3.state.min) {
+					_this3.set(parsed - 1); // increment value
+				}
+			}
+		}
+	};
+
+	this.iconRender = function (element) {
+		switch (element.type) {
+			case 'img':
+				return _react2.default.createElement('img', { style: element.styles, src: element.value, alt: 'icon' });
+			default:
+				return _react2.default.createElement('i', { className: element.value });
+		}
+	};
+};
 
 exports.default = CounterInput;
